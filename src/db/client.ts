@@ -1,19 +1,22 @@
 import { getCloudflareContext } from "@opennextjs/cloudflare";
-import { drizzle, type DrizzleD1Database } from "drizzle-orm/d1";
 
-import * as schema from "@/db/schema";
+import { createDb } from "@/db/create-db";
+import type { Database } from "@/db/create-db";
 
 type AppBindings = CloudflareEnv & {
 	DB: D1Database;
 };
 
-export type Database = DrizzleD1Database<typeof schema>;
+export { createDb };
+export type { Database };
 
-export function createDb(database: D1Database): Database {
-	return drizzle(database, { schema });
-}
+let cachedDb: Database | null = null;
 
 export function getDb(): Database {
+	if (cachedDb) {
+		return cachedDb;
+	}
 	const { env } = getCloudflareContext();
-	return createDb((env as AppBindings).DB);
+	cachedDb = createDb((env as AppBindings).DB);
+	return cachedDb;
 }
