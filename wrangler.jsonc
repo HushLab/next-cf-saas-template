@@ -37,7 +37,7 @@
 		{
 			"binding": "DB",
 			"database_name": "next-saas-template",
-			"database_id": "4cf139d4-b925-430b-90e8-65d0a72711f3",
+			"database_id": "xxxxxxxxxxxxxxx", //此id需要先创建 数据库然后填写id 进行迁移
 			"migrations_dir": "drizzle"
 		}
 	],
